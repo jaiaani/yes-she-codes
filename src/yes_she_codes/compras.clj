@@ -67,19 +67,28 @@
 (defn filtra-por-estabelecimento [estabelecimento lista-de-compras]
   (filter #(= (:estabelecimento %) estabelecimento) lista-de-compras))
 
-(println compras)
-(println "\n\n\n" (total-gasto compras))
-(println "\n\n\n" (filtra-por-mes "01" compras))
-(println "\n\n\n" (total-gasto-no-mes "01" compras))
-(println "\n\n\n" (filtra-por-estabelecimento "Outback" compras))
+;(println compras)
+;(println "\n\n\n" (total-gasto compras))
+;(println "\n\n\n" (filtra-por-mes "01" compras))
+;(println "\n\n\n" (total-gasto-no-mes "01" compras))
+;(println "\n\n\n" (filtra-por-estabelecimento "Outback" compras))
 
+;Criar uma função que retorne as compras que estão dentro de um intervalo de valor máximo e valor mínimo.
 
+(defn compras-entre-min-max [valor-minimo valor-maximo compras]
+  (filter #(and (>= (:valor %) valor-minimo) (<= (:valor % )valor-maximo))compras))
 
+;(println (compras-entre-min-max 40 100 compras))
 
+;Criar uma função que retorne os total gasto **agrupados por categoria**.
 
+(defn agrupa-por-categoria [compras]
+  (vec (map (fn [[categoria compras-da-categoria]]
+              {:categoria   categoria
+               :total-gasto (total-gasto compras-da-categoria)})
+            (group-by :categoria compras))))
 
-
-
+(println (agrupa-por-categoria compras))
 
 
 
